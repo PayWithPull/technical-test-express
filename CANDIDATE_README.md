@@ -49,13 +49,6 @@ Design and implement RESTful endpoints for the following operations. You should 
   - Return appropriate error codes for various failure scenarios
   - Return the updated subscription on success
 
-### 4. Remove a Subscription
-- **Functionality:** Cancel or delete a subscription for a specific customer
-- **Requirements:**
-  - Ensure the subscription belongs to the specified customer
-  - Return appropriate status codes
-  - Consider: Should this physically delete or just mark as cancelled?
-
 ## Data Structure
 
 ### Customer
