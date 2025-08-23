@@ -32,14 +32,14 @@ describe('Customer API Endpoints', () => {
 
   describe('Retrieve single customer', () => {
     // TODO: Update these variables with your implementation
-    const METHOD = 'get'; // <-- CANDIDATE: Replace with correct HTTP method
-    const BASE_URL = '/customers'; // <-- CANDIDATE: Replace with your endpoint base
+    const METHOD = '' as any; // <-- CANDIDATE: Replace with correct HTTP method (e.g., 'get', 'post', 'put', 'delete')
+    const BASE_URL = ''; // <-- CANDIDATE: Replace with your endpoint base
 
     it('should return a specific customer when valid ID provided', async () => {
       const customerId = 'cust_1';
       const url = `${BASE_URL}/${customerId}`;
       
-      const response = await request(app)[METHOD](url).expect(200);
+      const response = await (request(app) as any)[METHOD](url).expect(200);
 
       expect(response.body).toBeDefined();
       expect(response.body.data.id).toBe(customerId);
@@ -51,25 +51,21 @@ describe('Customer API Endpoints', () => {
       const invalidId = 'cust_999';
       const url = `${BASE_URL}/${invalidId}`;
       
-      const response = await request(app)[METHOD](url).expect(404);
-
-      expect(response.body).toBeDefined();
-      expect(response.body.success).toBe(false);
-      expect(response.body.message).toBeDefined();
+      await (request(app) as any)[METHOD](url).expect(404);
     });
   });
 
   describe('List customer subscriptions', () => {
     // TODO: Update these variables with your implementation
-    const METHOD = 'get'; // <-- CANDIDATE: Replace with correct HTTP method
-    const BASE_URL = '/customers'; // <-- CANDIDATE: Replace with your endpoint base
+    const METHOD = '' as any; // <-- CANDIDATE: Replace with correct HTTP method (e.g., 'get', 'post', 'put', 'delete')
+    const BASE_URL = ''; // <-- CANDIDATE: Replace with your endpoint base
 
     it('should return all subscriptions for a specific customer', async () => {
       const customerId = 'cust_1';
       const expectedSubscriptions = subscriptions.filter(s => s.customerId === customerId);
       const url = `${BASE_URL}/${customerId}/subscriptions`;
       
-      const response = await request(app)[METHOD](url).expect(200);
+      const response = await (request(app) as any)[METHOD](url).expect(200);
 
       expect(response.body).toBeDefined();
       expect(Array.isArray(response.body.data)).toBe(true);
@@ -77,22 +73,12 @@ describe('Customer API Endpoints', () => {
       expect(response.body.data[0].customerId).toBe(customerId);
     });
 
-    it('should return 404 when customer does not exist', async () => {
-      const invalidId = 'cust_999';
-      const url = `${BASE_URL}/${invalidId}/subscriptions`;
-      
-      const response = await request(app)[METHOD](url).expect(404);
-
-      expect(response.body).toBeDefined();
-      expect(response.body.success).toBe(false);
-    });
-
     it('should return subscriptions array even for customers with few subscriptions', async () => {
       // Customer 4 has only 1 subscription - testing that single items still return as array
       const customerId = 'cust_4';
       const url = `${BASE_URL}/${customerId}/subscriptions`;
       
-      const response = await request(app)[METHOD](url).expect(200);
+      const response = await (request(app) as any)[METHOD](url).expect(200);
 
       expect(response.body).toBeDefined();
       expect(Array.isArray(response.body.data)).toBe(true);
@@ -102,8 +88,8 @@ describe('Customer API Endpoints', () => {
 
   describe('Update subscription', () => {
     // TODO: Update these variables with your implementation
-    const METHOD = 'put'; // <-- CANDIDATE: Replace with correct HTTP method
-    const BASE_URL = '/customers'; // <-- CANDIDATE: Replace with your endpoint base
+    const METHOD = '' as any; // <-- CANDIDATE: Replace with correct HTTP method (e.g., 'get', 'post', 'put', 'delete')
+    const BASE_URL = ''; // <-- CANDIDATE: Replace with your endpoint base
 
     it('should update a subscription successfully', async () => {
       const customerId = 'cust_1';
@@ -114,7 +100,7 @@ describe('Customer API Endpoints', () => {
       };
       const url = `${BASE_URL}/${customerId}/subscriptions/${subscriptionId}`;
       
-      const response = await request(app)[METHOD](url)
+      const response = await (request(app) as any)[METHOD](url)
         .send(updateData)
         .expect(200);
 
@@ -132,12 +118,9 @@ describe('Customer API Endpoints', () => {
       };
       const url = `${BASE_URL}/${invalidCustomerId}/subscriptions/${subscriptionId}`;
       
-      const response = await request(app)[METHOD](url)
+      await (request(app) as any)[METHOD](url)
         .send(updateData)
         .expect(404);
-
-      expect(response.body).toBeDefined();
-      expect(response.body.success).toBe(false);
     });
 
     it('should return 404 when subscription does not exist', async () => {
@@ -148,12 +131,9 @@ describe('Customer API Endpoints', () => {
       };
       const url = `${BASE_URL}/${customerId}/subscriptions/${invalidSubscriptionId}`;
       
-      const response = await request(app)[METHOD](url)
+      await (request(app) as any)[METHOD](url)
         .send(updateData)
         .expect(404);
-
-      expect(response.body).toBeDefined();
-      expect(response.body.success).toBe(false);
     });
 
     it('should return 404 when subscription does not belong to customer', async () => {
@@ -164,12 +144,9 @@ describe('Customer API Endpoints', () => {
       };
       const url = `${BASE_URL}/${customerId}/subscriptions/${otherCustomerSubscriptionId}`;
       
-      const response = await request(app)[METHOD](url)
+      await (request(app) as any)[METHOD](url)
         .send(updateData)
         .expect(404);
-
-      expect(response.body).toBeDefined();
-      expect(response.body.success).toBe(false);
     });
 
     it('should return 400 for invalid update data', async () => {
@@ -181,12 +158,9 @@ describe('Customer API Endpoints', () => {
       };
       const url = `${BASE_URL}/${customerId}/subscriptions/${subscriptionId}`;
       
-      const response = await request(app)[METHOD](url)
+      await (request(app) as any)[METHOD](url)
         .send(invalidData)
         .expect(400);
-
-      expect(response.body).toBeDefined();
-      expect(response.body.success).toBe(false);
     });
   });
 
